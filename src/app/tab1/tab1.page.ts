@@ -10,7 +10,7 @@ export class Tab1Page {
   post:{
     username: string,
     message: string,
-    createdDate: any
+    createddate: any
   };
   message: string;
   
