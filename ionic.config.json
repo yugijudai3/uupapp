@@ -1,5 +1,7 @@
 {
   "name": "uupapp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
