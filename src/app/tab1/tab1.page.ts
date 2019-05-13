@@ -19,11 +19,6 @@ export class Tab1Page implements OnInit {
   posts: Post[];
 
   postscollection: AngularFirestoreCollection<Post>;
-
-  ngOnInit(){
-    //コンポーネント初期化時に、投稿を読み込むgetoPosts()を実行
-    this.getPosts();
-  }
   
   constructor(
     private alertCtrl: AlertController,
@@ -32,6 +27,11 @@ export class Tab1Page implements OnInit {
     private afAuth: AngularFireAuth
     ){}
   
+    ngOnInit(){
+      //コンポーネント初期化時に、投稿を読み込むgetoPosts()を実行
+      this.getPosts();
+    }
+
   addPost(){
     //入力されたメッセージを使って、投稿データを作成
     this.post = {
@@ -56,7 +56,7 @@ export class Tab1Page implements OnInit {
         duration: 3000
       });
       await toast.present();
-    })
+    });
   }
 
   //Firestoreから投稿データを読み込む
