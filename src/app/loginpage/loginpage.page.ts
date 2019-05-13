@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Tab1Page } from '../tab1/tab1.page';
 import { async } from 'q';
 
 @Component({
@@ -34,7 +35,7 @@ export class LoginpagePage implements OnInit {
         duration: 3000
       });
       await toast.present();
-      this.router.navigate(["/tabs"]);
+      this.router.navigate(["/tab1"]);
     })
     .catch(async error => {
       const toast = await this.toastCtrl.create({
