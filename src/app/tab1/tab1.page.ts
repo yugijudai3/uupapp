@@ -1,66 +1,46 @@
-import { Component } from '@angular/core';
-import { AlertController } from "@ionic/angular";
+import { Component, OnInit } from '@angular/core';
+import { AlertController,ToastController } from "@ionic/angular";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
-  post:{
-    username: string,
-    message: string,
-    createddate: any
-  };
+
+export class Tab1Page implements OnInit {
+
   message: string;
+  post: Post;
+  posts: Post[];
+
+  postscollection: AngularFirestoreCollection;
+
+  ngOnInit(){
+    this.getPosts();
+  }
   
-  constructor(private alertCtrl: AlertController){}
-  
-  posts:{username: string, message: string, createddate: any}[]
-  =[{
-    username: "大根",
-    message: "お前を殺す",
-    createddate: "10分前"
-  },{
-    username: "MSZ",
-    message: "お前を殺す",
-    createddate: "5分前"
-  }];
+  constructor(
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private afStore: AngularFirestore,
+    private afAuth: AngularFireAuth
+    ){}
   
   addPost(){
-    this.post={
-      username: "遊戯",
+    this.post = {
+      id: "",
+      userName: this.afAuth.auth.currentUser.displayName,
       message: this.message,
-      createddate: "数秒前"
+      created: firebase.firestore.FieldValue.serverTimestamp()
     };
-    this.posts.push(this.post);
-    this.message="";
+    
   }
   
-  async presentPrompt(index: number){
-    const alert = await this.alertCtrl.create({
-      header: "メッセージ編集",
-      inputs:[{
-        name: "message",
-        type: "text",
-        placeholder: "メッセージ"
-      }],
-      buttons:[{
-        text: "キャンセル",
-        role: "cancel",
-        handler: () => {console.log("キャンセルが選択されました");}
-      },
-      {
-        text: "更新",
-        handler: data => {
-          console.log(data);
-          this.posts[index].message = data.message;
-        }
-      }]
-    });
-    await alert.present();
-  }
-  
+ 
   deletePost(index: number){
     this.posts.splice(index, 1);
   }
