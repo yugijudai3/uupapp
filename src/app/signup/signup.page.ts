@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
+
 export class SignupPage implements OnInit {
   signup:{
     email: string;
@@ -31,6 +32,7 @@ export class SignupPage implements OnInit {
     this.afAuth.auth.createUserWithEmailAndPassword(this.signup.email, this.signup.password)
     .then(created => {
       const newUser = created.user;
+
       newUser.updateProfile({
         displayName: this.signup.name,
         photoURL: ""
