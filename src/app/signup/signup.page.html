@@ -34,7 +34,7 @@
         <ion-icon name="person" padding-right></ion-icon>
         ユーザー名
       </ion-label>
-      <ion-input required [(ngModel)]="signup.username" type="text" name="signup.username">
+      <ion-input required [(ngModel)]="signup.name" type="text" name="signup.name">
       </ion-input>
     </ion-item>
     <ion-button class="submitBtn" [disabled]="!f.form.valid" (click)="signUp()" size="large" expand="block">

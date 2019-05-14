@@ -41,6 +41,7 @@ export class SignupPage implements OnInit {
         message: "${created.user.displayName}さんを登録しました",
         duration: 3000
       });
+      console.log(created.user.displayName);
       await toast.present();
     }).catch(async error => {
       const toast = await this.toastCtrl.create({

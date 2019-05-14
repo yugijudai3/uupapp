@@ -3,6 +3,11 @@
     <ion-title>
       Ionic 掲示板
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button end fill="clear" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +25,7 @@
    <!--投稿されたメッセージを表示する-->
    <ion-card class="singlePost" *ngFor="let p of posts; let i = index">
      <ion-item>
-       <h2 padding-vertical>{{p.username}}</h2>
+       <h2 padding-vertical>{{p.userName}}</h2>
      </ion-item>
      <ion-card-content>
        <div margin-bottom>{{p.message}}</div>
@@ -32,19 +37,24 @@
            </ion-button>
          </ion-col>
          <ion-col size="6" size-sm>
-           <ion-button fill="clear" size="small" (click)="presentPrompt(i)">
+           <ion-button fill="clear" size="small" (click)="presentPrompt(p)">
              <ion-icon name="create"></ion-icon>
              <div>編集</div>
            </ion-button>
          </ion-col>
          <ion-col size="6" size-sm>
-           <ion-button fill="clear" size="small" (click)="deletePost(i)">
+           <ion-button fill="clear" size="small" (click)="deletePost(p)">
              <ion-icon name="trash"></ion-icon>
                <div>削除</div>
            </ion-button>
          </ion-col>
          <ion-col size="6" size-sm class="postedTime">
            <ion-note>{{p.createddate}}</ion-note>
+         </ion-col>
+         <ion-col size="6" size-sm class="postedTime">
+           <ion-note *ngIf="p.created">
+             {{differenceTime(p.created.toDate())}}
+           </ion-note>
          </ion-col>
        </ion-row>
      </ion-card-content>

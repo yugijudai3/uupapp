@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { Post } from '../models/post';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { async } from 'q';
 
 @Component({
@@ -24,11 +26,13 @@ export class Tab1Page implements OnInit {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private afStore: AngularFirestore,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private router: Router
     ){}
   
     ngOnInit(){
       //コンポーネント初期化時に、投稿を読み込むgetoPosts()を実行
+      this.afStore.firestore.enableNetwork();
       this.getPosts();
     }
 
@@ -121,6 +125,31 @@ export class Tab1Page implements OnInit {
         duration: 3000
       });
       await toast.present();
+    }).catch(async error => {
+      const toast = await this.toastCtrl.create({
+        message: error.toString(),
+        duration: 3000
+      });
+      await toast.present();
+    });
+  }
+
+  //投稿日時と現在日時との差を返す
+  differenceTime(time: Date): string{
+    moment.locale("ja");
+    return moment(time).fromNow();
+  }
+
+  //ログアウト処理
+  logout(){
+    this.afStore.firestore.disableNetwork();
+    this.afAuth.auth.signOut().then(async() => {
+      const toast = await this.toastCtrl.create({
+        message: "ログアウトしました",
+        duration: 3000
+      });
+      await toast.present();
+      this.router.navigateByUrl("/loginpage");
     }).catch(async error => {
       const toast = await this.toastCtrl.create({
         message: error.toString(),
