@@ -46,7 +46,7 @@ export class Tab1Page implements OnInit {
     };
 
     //ここでFirestoreにデータを追加する
-    this.afStore.collection("posts").add(this.post).then(docRef =>{
+    this.afStore.collection("posts").add(this.post).then(docRef => {
       //一度投稿を追加した後に、idを更新する
       this.postscollection.doc(docRef.id).update({
         id: docRef.id
