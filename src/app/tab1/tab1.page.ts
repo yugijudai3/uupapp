@@ -117,7 +117,7 @@ export class Tab1Page implements OnInit {
 
   //投稿を削除する
   deletePost(post: Post){
-    //受け取った投稿のidを参照した削除
+    //受け取った投稿のidを参照して削除
     this.postscollection.doc(post.id).delete()
     .then(async() => {
       const toast = await this.toastCtrl.create({
